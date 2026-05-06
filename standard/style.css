@@ -41,6 +41,7 @@
 :root {--dark: #110;}
 
 body {
+	transform: scaleY(-1);
 	text-align: center;
 	margin: 0;
 	background-color: var(--dark);
