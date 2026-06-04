@@ -405,9 +405,9 @@ body {
 
 #heading {
 	position: absolute;
-	top: 100vh;
+	top: calc(100vh - 110px);
 	left: 50%;
-	translate: -50% -110px;
+	translate: -50% 0;
 	background-color: #444;
 	width: 600px;
 	height: 600px;
