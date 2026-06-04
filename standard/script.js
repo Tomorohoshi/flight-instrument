@@ -274,7 +274,7 @@ function defineSensors() {
 			} else {
 				alpha = e.alpha - error.alpha;
 			}
-			
+
 			if(settings.reverseBetaGamma.value) {
 				beta = e.beta + error.gamma;
 				gamma = e.gamma + error.beta;
@@ -448,7 +448,7 @@ function update() {
 	el("speedScale").style.translate = `0 ${speed%speedDivisionSize/speedDivisionSize * 50}px`;
 	speed = baseSpeed;
 	beforeSpeed = speed;
-	
+
 	// ここから高度の更新
 	const baseAltitude = altitude;
 	switch(settings.altitudeUnitType.value) { // メートルから他の単位へ変換
@@ -517,7 +517,12 @@ function update() {
 let isSettingsOpen = true; // 設定が開いているかどうか
 let settings = {};
 const allSettings = document.querySelectorAll(".settings");
-window.onload = setSettings;
+
+// window.onload = setSettings;
+window.onload = () => {
+	setSettings();
+	settingsDisplay();
+}
 
 /**
  * 設定の各要素の位置を指定します。
