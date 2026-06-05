@@ -1,6 +1,6 @@
 /** この関数は、取得したidを持つ要素を返します。
- * @param {string} id - 取得する要素のidです。
- * @returns {ElementObject} そのidを持つ要素です。
+* @param {string} id - 取得する要素のidです。
+* @returns {ElementObject} そのidを持つ要素です。
 */
 function el(id) {return document.getElementById(id)};
 const highScale = el("highScale").getContext("2d");
@@ -512,6 +512,12 @@ function update() {
 
 	requestAnimationFrame(update);
 }
+
+el("inputAltitude").addEventListener("input", () => {
+	el("outputAltitude").innerHTML = el("inputAltitude").value;
+	altitude = Number(el("inputAltitude").value);
+	update();
+});
 
 // ここから設定に関するプログラム
 let isSettingsOpen = true; // 設定が開いているかどうか
