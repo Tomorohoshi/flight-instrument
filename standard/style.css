@@ -163,7 +163,7 @@ body {
 
 .settings {
 	display: grid; /* 初期値として */
-	position: absolute;
+	/* position: absolute; */
 	padding: 10px;
 	background-color: #3f393699;
 	z-index: 1;

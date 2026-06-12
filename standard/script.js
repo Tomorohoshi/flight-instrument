@@ -690,6 +690,8 @@ function setSettings() {
 		});
 	});
 
+	/** この関数は、数字を書く窓の数が変更された時に呼び出されます
+	 */
 	function updateWritableVal(id) {
 		const display = document.querySelector(`#${id} .rewritableDisplay`);
 		switch(id) {
