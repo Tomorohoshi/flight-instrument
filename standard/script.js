@@ -284,19 +284,39 @@ function defineSensors() {
 			}
 
 			if(settings.reverseBetaGamma.value) {
+				/*
+				// b -180~180
+				// g -90~90
 				const beforeBeta = beta;
-				beta = gamma;
-				gamma = beforeBeta;
-				if(beta >= 0) {
-					beta = 90 - beta;
+				beta = gamma; // b → -90~90 (g)
+				gamma = beforeBeta; // g → -180~180 (b)
+				if(beta >= 0) { // b 0~90
+					beta = 90 - beta; // b → 90~0 (g)
 					gamma = (180-Math.abs(gamma)) * Math.sign(gamma);
-				} else {
-					beta += 90;
-					beta *= -1;
+					// g → sign() * 180~0 (b)
+				} else { // b -90~0
+					beta += 90; // b → 0~90 (g)
+					beta *= -1; // b → 0~-90 (g)
 				};
 				beta += 90;
-				// gamma = (180-Math.abs(gamma)) * Math.sign(gamma);
-				// beta = 90 + ((beta-90) * -1);
+				*/
+				// 要するに、
+				// gamma → -90から90を、90から0(-90<=gamma<0)・180から90(0<=gamma)に
+				// beta → -180から180を、もしgamma>=0なら0から-180(-180<=,<0)・180から0(0<=)に
+				// 変換し、betaとgammaを入れ替えている
+				if (gamma >= 0) { // betaの調整、gamma>=0なら180から0、gamma<0なら0から-180
+					if (beta >= 0) {
+						beta = 180 - beta;
+					} else {
+						beta += 180;
+					}
+				}
+				if (gamma >= 0) { // gammaの調整(一応分けておく)、gamma>=0なら180から90、gamma<0なら90から0
+					gamma = 90 - gamma;
+					gamma += 90;
+				} else {
+					gamma *= -1; // プラスにする
+				}
 			}
 
 			if(doUpdateError.alpha) { // 誤差の更新を申請されたときの処理
@@ -607,6 +627,7 @@ function setSettings() {
 		});
 	});
 
+	// スピンボタンの数値ではないバージョン
 	document.querySelectorAll(".valueWithLRBt").forEach(element => {
 		const dataset = element.dataset;
 		let data = settings[element.id] = {};
@@ -725,6 +746,7 @@ function setSettings() {
 		display.value = result;
 	}
 
+	// 数字を入力する場所
 	document.querySelectorAll(".rewritableVal").forEach(element => {
 		const dataset = element.dataset;
 		let data = settings[element.id] = {};
@@ -785,35 +807,8 @@ function setSettings() {
 };
 
 function settingsDisplay() {
-	el("settings").style.display = isSettingsOpen ? "none" : "grid";
-	if(isSettingsOpen) {
-		el("enableCamera").style.display = "none";
-	} else {
-		el("enableCamera").style.display = "block";
-	}
+	el("settings").style.translate = isSettingsOpen ? "-100% 0" : "0";
+	el("settingsImg").style.left = isSettingsOpen ? "max(20px, 5vw)" : "320px";
+	el("instruments").style.translate = isSettingsOpen ? "0" : "150px 0";
 	isSettingsOpen = !isSettingsOpen;
-}
-
-function enableCamera() {
-	if(isSettingsOpen) settingsDisplay(); // 設定を全て非表示にする
-	navigator.mediaDevices.getUserMedia({ video: {
-		aspectRatio: 4 / 3,
-    facingMode: { ideal: "environment" }
-	} })
-  .then(stream => {
-    el("camera").srcObject = stream;
-		el("camera").style.display = "block";
-		el("camera").style.animation = "fadeIn 1s 1s linear forwards";
-		el("enableCamera").style.opacity = 0; // opacityはここ以外で操作しないので永久に表示しない
-		el("speedMeter").style.animation = "speedMeterMove 1s ease-in-out forwards"; // スピードメーターを動かす
-		el("altitudeMeter").style.animation = "altitudeMeterMove 1s ease-in-out forwards"; // アルティメーターを動かす
-		el("center").classList.add("camera");
-		el("ground").classList.add("camera");
-		el("high").classList.add("camera");
-		el("speedMeter").classList.add("camera");
-		el("altitudeMeter").classList.add("camera");
-  })
-  .catch(err => {
-    console.error("カメラ取得エラー:", err);
-  });
 }

@@ -129,15 +129,16 @@ body {
 .rewritableVal {
 	position: relative;
 	left: 50%;
-	translate: -60px 0;
+	translate: -50% 0;
+	width: 200px;
+	height: 40px;
 	margin-top: 5px;
 	display: grid;
-	grid-template-columns: 40px 80px;
+	grid-template-columns: 120px repeat(2, 1fr);
 }
 
 .rewritableVal .rewritableDisplay {
-	grid-column: 1 / 3;
-	font-size: 1.5em;
+	font-size: 2em;
 	background-color: #320;
 	text-align: right;
 	border: 0;
@@ -175,14 +176,17 @@ body {
 	position: fixed;
 	top: 0;
 	height: 100vh;
+	width: 300px;
 	font-size: .75rem;
 	background-color: #3f393699;
 	z-index: 10;
 	overflow-y: scroll;
+	translate: -100% 0;
+	transition: all .5s cubic-bezier(0.125, 0.75, 0.625, 1);
 }
 
 #settings fieldset {
-	margin: 10px;
+	margin: 15px;
 
 	legend {text-align: left;}
 
@@ -202,12 +206,14 @@ body {
 	padding: 7px;
 	border-radius: 100px;
 	cursor: pointer;
+	transition: all .5s cubic-bezier(0.125, 0.75, 0.625, 1);
 }
 
 #instruments {
 	height: 100vh;
 	white-space: nowrap; /* 要素を横並びにするため */
 	z-index: -2;
+	transition: translate .5s cubic-bezier(0.125, 0.75, 0.625, 1);
 }
 
 .camera#speedMeter, .camera#altitudeMeter {
