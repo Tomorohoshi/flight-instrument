@@ -283,7 +283,7 @@ function defineSensors() {
 				gamma = e.gamma - error.gamma;
 			}
 
-			if(settings.reverseBetaGamma.value) {
+			if(settings.reverseBetaGammaToLeft.value || settings.reverseBetaGammaToRight.value) {
 				/*
 				// b -180~180
 				// g -90~90
@@ -316,6 +316,16 @@ function defineSensors() {
 					gamma += 90;
 				} else {
 					gamma *= -1; // プラスにする
+				}
+
+				const beforeBeta = beta; // 入れ替える
+				beta = gamma;
+				gamma = beforeBeta;
+
+				// 右に傾けたらどちらも符号が逆になるので、その処理
+				if (settings.reverseBetaGammaToRight.value) {
+					beta *= -1;
+					gamma *= -1;
 				}
 			}
 
