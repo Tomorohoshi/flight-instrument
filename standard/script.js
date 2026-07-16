@@ -275,7 +275,7 @@ function defineSensors() {
 				alpha = e.alpha - error.alpha;
 			}
 
-			if(settings.reverseBetaGamma.value) {
+			if(settings.reverseBetaGammaToLeft.value || settings.reverseBetaGammaToRight.value) {
 				beta = e.beta + error.gamma;
 				gamma = e.gamma + error.beta;
 			} else {
