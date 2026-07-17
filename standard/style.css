@@ -198,6 +198,14 @@ body {
 	}
 }
 
+#updateAllBt {
+	margin-top: 10px;
+	padding: 10px 20px;
+	background-color: #320;
+	border: 2px solid #430;
+	cursor: pointer;
+}
+
 #reverseBetaGammaToLeft, #reverseBetaGammaToRight {
 	display: inline-block;
 }
