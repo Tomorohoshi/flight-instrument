@@ -8,6 +8,20 @@
 <body>
 	<div id="instruments">
 		<div id="speedMeter">
+			<div id="speedScaleNum">
+				<span id="speedScaleNum1" style="--index: 0;">1</span>
+				<span id="speedScaleNum2" style="--index: 1;">2</span>
+				<span id="speedScaleNum3" style="--index: 2;">3</span>
+				<span id="speedScaleNum4" style="--index: 3;">4</span>
+				<span id="speedScaleNum5" style="--index: 4;">5</span>
+				<span id="speedScaleNum6" style="--index: 5;">6</span>
+				<span id="speedScaleNum7" style="--index: 6;">7</span>
+				<span id="speedScaleNum8" style="--index: 7;">8</span>
+				<span id="speedScaleNum9" style="--index: 8;">9</span>
+				<span id="speedScaleNum10" style="--index: 9;">10</span>
+				<span id="speedScaleNum11" style="--index: 10;">11</span>
+				<span id="speedScaleNum12" style="--index: 11;">12</span>
+			</div>
 			<canvas id="speedScale" width="90" height="600"></canvas>
 			<div id="speedNumParent">
 				<span>
@@ -32,6 +46,16 @@
 			<canvas id="symbol" width="400" height="430"></canvas>
 		</div>
 		<div id="altitudeMeter">
+			<div id="altitudeScaleNum">
+				<span id="altitudeScaleNum1" style="--index: 0;">1</span>
+				<span id="altitudeScaleNum2" style="--index: 1;">2</span>
+				<span id="altitudeScaleNum3" style="--index: 2;">3</span>
+				<span id="altitudeScaleNum4" style="--index: 3;">4</span>
+				<span id="altitudeScaleNum5" style="--index: 4;">5</span>
+				<span id="altitudeScaleNum6" style="--index: 5;">6</span>
+				<span id="altitudeScaleNum7" style="--index: 6;">7</span>
+				<span id="altitudeScaleNum8" style="--index: 7;">8</span>
+			</div>
 			<canvas id="altitudeScale" width="90" height="600"></canvas>
 			<div id="altitudeNumParent">
 				<span>
@@ -105,6 +129,7 @@
 		</fieldset>
 	</div>
 	<br><br><br><br>TEST<br><br><br>
+	<br>Speed: <input id="inputSpeed" type="range" step="1" max="300" value="0"><span id="outputSpeed">0</span>
 	<br>Altitude: <input id="inputAltitude" type="range" step="1" max="1000" value="0"><span id="outputAltitude">0</span>
 	<br>Speed: <span id="outputSpeed">0</span>
 	<br>Alpha: <span id="outputAlpha">0</span>

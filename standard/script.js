@@ -395,6 +395,7 @@ function defineSensors() {
 	update(); // 表示を更新し続けるトリガー
 };
 
+
 function update() {
 	el("outputAlpha").innerHTML = alpha ? alpha : 0;
 	el("outputBeta").innerHTML = beta ? beta : 0;
@@ -475,7 +476,67 @@ function update() {
 		el("speedOncePlace").style.translate = `0 calc(${speedDecimal-1}em - ${(speedDecimal-1) * 20}%)`;
 	};
 	const speedDivisionSize = settings.speedDivisionSize.value;
+	const beforeTranslate = Number(el("speedScale").style.translate.slice(4, -2));
 	el("speedScale").style.translate = `0 ${speed%speedDivisionSize/speedDivisionSize * 50}px`;
+	el("speedScaleNum").style.translate = `0 ${speed%speedDivisionSize/speedDivisionSize * 50}px`;
+	// ここから目盛りの数値の更新
+	if ((speed < beforeSpeed && speed%speedDivisionSize > beforeSpeed%speedDivisionSize) || (speed > beforeSpeed && speed%speedDivisionSize < beforeSpeed%speedDivisionSize)) { // 目盛りを通り越した時
+		switch (speedDivisionSize) {
+			case 1:
+				for(let i=0;i<12;i++) {
+					const num = (speed - speed % speedDivisionSize) - (speedDivisionSize * (i-6));
+					if(num % 5 === 0) {
+						el("speedScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("speedScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 2:
+			case 5:
+				for(let i=0;i<12;i++) {
+					const num = (speed - speed % speedDivisionSize) - (speedDivisionSize * (i-6));
+					if(num % 10 === 0) {
+						el("speedScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("speedScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 10:
+				for(let i=0;i<12;i++) {
+					const num = (speed - speed % speedDivisionSize) - (speedDivisionSize * (i-6));
+					if(num % 50 === 0) {
+						el("speedScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("speedScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 20:
+			case 50:
+				for(let i=0;i<12;i++) {
+					const num = (speed - speed % speedDivisionSize) - (speedDivisionSize * (i-6));
+					if(num % 100 === 0) {
+						el("speedScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("speedScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 100:
+				for(let i=0;i<12;i++) {
+					const num = (speed - speed % speedDivisionSize) - (speedDivisionSize * (i-6));
+					if(num % 500 === 0) {
+						el("speedScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("speedScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+		}
+	}
+
 	speed = baseSpeed;
 	beforeSpeed = speed;
 
@@ -537,6 +598,65 @@ function update() {
 	}
 	const altitudeDivisionSize = settings.altitudeScaleDivisionSize.value;
 	el("altitudeScale").style.translate = `0 ${altitude%altitudeDivisionSize/altitudeDivisionSize * 75}px`;
+	el("altitudeScaleNum").style.translate = `0 ${altitude%altitudeDivisionSize/altitudeDivisionSize * 75}px`;
+	// ここから目盛りの数値の更新
+	if ((altitude < beforeAltitude && altitude%altitudeDivisionSize > beforeAltitude%altitudeDivisionSize) || (altitude > beforeAltitude && altitude%altitudeDivisionSize < beforeAltitude%altitudeDivisionSize)) { // 目盛りを通り越した時
+		switch (altitudeDivisionSize) {
+			case 1:
+				for(let i=0;i<8;i++) {
+					const num = (altitude - altitude % altitudeDivisionSize) - (altitudeDivisionSize * (i-4));
+					if(num % 5 === 0) {
+						el("altitudeScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("altitudeScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 2:
+			case 5:
+				for(let i=0;i<8;i++) {
+					const num = (altitude - altitude % altitudeDivisionSize) - (altitudeDivisionSize * (i-4));
+					if(num % 10 === 0) {
+						el("altitudeScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("altitudeScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 10:
+				for(let i=0;i<8;i++) {
+					const num = (altitude - altitude % altitudeDivisionSize) - (altitudeDivisionSize * (i-4));
+					if(num % 50 === 0) {
+						el("altitudeScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("altitudeScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 20:
+			case 50:
+				for(let i=0;i<8;i++) {
+					const num = (altitude - altitude % altitudeDivisionSize) - (altitudeDivisionSize * (i-4));
+					if(num % 100 === 0) {
+						el("altitudeScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("altitudeScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+			case 100:
+				for(let i=0;i<8;i++) {
+					const num = (altitude - altitude % altitudeDivisionSize) - (altitudeDivisionSize * (i-4));
+					if(num % 500 === 0) {
+						el("altitudeScaleNum" + (i+1)).innerHTML = num;
+					} else {
+						el("altitudeScaleNum" + (i+1)).innerHTML = "";
+					}
+				}
+				break;
+		}
+	}
+
 	altitude = baseAltitude;
 	beforeAltitude = altitude;
 
@@ -546,6 +666,12 @@ function update() {
 el("inputAltitude").addEventListener("input", () => {
 	el("outputAltitude").innerHTML = el("inputAltitude").value;
 	altitude = Number(el("inputAltitude").value);
+	update();
+});
+
+el("inputSpeed").addEventListener("input", () => {
+	el("outputSpeed").innerHTML = el("inputSpeed").value;
+	speed = Number(el("inputSpeed").value);
 	update();
 });
 
