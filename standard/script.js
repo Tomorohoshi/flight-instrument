@@ -227,6 +227,7 @@ let beforeSpeed, beforeAltitude; // 前のティックのを保存する用
 let accY; // headingの補完用の加速度
 let alpha, beta, gamma; // 角度
 let radian = {alpha, beta, gamma};
+let doUpdateAll = true; // 全ての値を更新するかどうか(最初の初期値の設定などに使用)
 let updateID; // 更新のID
 let error = { // デバイスから取得したデータの誤差
 	accSum: 0,
@@ -480,7 +481,7 @@ function update() {
 	el("speedScale").style.translate = `0 ${speed%speedDivisionSize/speedDivisionSize * 50}px`;
 	el("speedScaleNum").style.translate = `0 ${speed%speedDivisionSize/speedDivisionSize * 50}px`;
 	// ここから目盛りの数値の更新
-	if ((speed < beforeSpeed && speed%speedDivisionSize > beforeSpeed%speedDivisionSize) || (speed > beforeSpeed && speed%speedDivisionSize < beforeSpeed%speedDivisionSize)) { // 目盛りを通り越した時
+	if (doUpdateAll || (speed < beforeSpeed && speed%speedDivisionSize > beforeSpeed%speedDivisionSize) || (speed > beforeSpeed && speed%speedDivisionSize < beforeSpeed%speedDivisionSize)) { // 目盛りを通り越した時
 		switch (speedDivisionSize) {
 			case 1:
 				for(let i=0;i<12;i++) {
@@ -600,7 +601,7 @@ function update() {
 	el("altitudeScale").style.translate = `0 ${altitude%altitudeDivisionSize/altitudeDivisionSize * 75}px`;
 	el("altitudeScaleNum").style.translate = `0 ${altitude%altitudeDivisionSize/altitudeDivisionSize * 75}px`;
 	// ここから目盛りの数値の更新
-	if ((altitude < beforeAltitude && altitude%altitudeDivisionSize > beforeAltitude%altitudeDivisionSize) || (altitude > beforeAltitude && altitude%altitudeDivisionSize < beforeAltitude%altitudeDivisionSize)) { // 目盛りを通り越した時
+	if (doUpdateAll || (altitude < beforeAltitude && altitude%altitudeDivisionSize > beforeAltitude%altitudeDivisionSize) || (altitude > beforeAltitude && altitude%altitudeDivisionSize < beforeAltitude%altitudeDivisionSize)) { // 目盛りを通り越した時
 		switch (altitudeDivisionSize) {
 			case 1:
 				for(let i=0;i<8;i++) {
@@ -659,6 +660,8 @@ function update() {
 
 	altitude = baseAltitude;
 	beforeAltitude = altitude;
+
+	doUpdateAll = false;
 
 	requestAnimationFrame(update);
 }
